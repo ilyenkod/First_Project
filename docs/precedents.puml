@@ -1,0 +1,48 @@
+@startuml
+
+header Чат-Api
+title Диаграмма прецедентов
+
+left to right direction
+
+rectangle "Чат"{
+    usecase "Создать чат" as create_chat
+    usecase "Обновить чат" as update_chat
+    usecase "Удалить чат" as delete_chat
+    usecase "Получить информацию" as chat_information
+    usecase "Вернуться в чат" as return_chat
+    usecase "Выйти из чата" as leave_chat
+    usecase "Посмотреть участников" as see_users
+    usecase "Отправить сообщение" as send_message
+    usecase "Получить список сообщений" as list_messages
+    usecase "Добавить участника" as add_user
+}
+
+rectangle "Авторизация" {
+    usecase "Регистрация" as registration
+    usecase "Авторизация" as authorization
+}
+
+actor "Гость" as guest
+actor "Создатель" as creator
+actor "Пользователь" as user
+
+guest -- registration
+guest -- authorization
+
+user -- create_chat
+user -- chat_information
+user -- see_users
+user -- return_chat
+user -- leave_chat
+user -- send_message
+user -- list_messages
+
+creator -- create_chat
+creator -- update_chat
+creator -- delete_chat
+creator -- add_user
+
+
+
+@enduml
