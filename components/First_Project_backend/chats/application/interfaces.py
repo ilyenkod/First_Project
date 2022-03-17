@@ -44,7 +44,7 @@ class ChatRepo(ABC):
 class ChatsRepo(ABC):
 
     @abstractmethod
-    def create_chat(self, user_owner: User):
+    def create_chat(self, id: int, user_owner: User, title: str, description: str):
         pass
 
     @abstractmethod

@@ -4,7 +4,7 @@ from typing import Optional
 
 from components.First_Project_backend.chats.application import interfaces
 from components.First_Project_backend.chats.application.dataclasses import User, Chat, Message
-from tables import users, chats
+from components.First_Project_backend.chats.adapters.database.tables import chats, users
 
 
 class UsersRepo(interfaces.UsersRepo):
@@ -15,27 +15,33 @@ class UsersRepo(interfaces.UsersRepo):
         users.append(new_user)
 
     def get_by_id(self, id: int) -> User:
-        return users[id-1]
+        return users[id]
 
 class ChatsRepo(interfaces.ChatsRepo):
 
     def create_chat(self, user_owner: User, title: str, description: str):
         n = len(chats)
-        new_chat = Chat(n, user_owner.user_id, title, description)
+        new_chat = Chat(id=n, creator_id=user_owner.id, title=title, description=description,
+                        users_list=list(), users_left=list(), messages=list())
+        new_chat.users_list.append(user_owner)
         chats.append(new_chat)
 
     def delete_chat(self, user_init: User, id_chat: int):
-        if chats[id_chat-1].creator_id == user_init.id:
-            del chats[id_chat-1]
+        if chats[id_chat].creator_id == user_init.id:
+            del chats[id_chat]
         else:
             raise Exception("Нет прав для удаления")
 
     def get_chat(self, id_chat: int) -> Chat:
-        return chats[id_chat-1]
+        return chats[id_chat]
 
-@component()
+
 class ChatRepo(interfaces.ChatRepo):
-    my_chat: Chat
+
+    #my_chat: Chat
+
+    def __init__(self, my_chat: Chat):
+        self.my_chat = my_chat
 
     def update_information(self, user_init: User, title: Optional[str] = None, description: Optional[str] = None):
         if user_init.id != self.my_chat.creator_id:

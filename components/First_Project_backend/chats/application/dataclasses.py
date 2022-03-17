@@ -11,8 +11,9 @@ class User:
 
 @attr.dataclass
 class Chat:
-    id = int
-    creator_id = int
+
+    id: int
+    creator_id: int
     title: str
     description: str
     users_list : Optional[List]
