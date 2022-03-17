@@ -43,6 +43,12 @@ creator -- update_chat
 creator -- delete_chat
 creator -- add_user
 
+creator -- chat_information
+creator -- see_users
+creator -- return_chat
+creator -- leave_chat
+creator -- send_message
+creator -- list_messages
 
 
 @enduml
