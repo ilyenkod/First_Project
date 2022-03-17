@@ -1,4 +1,5 @@
 import attr
+import datetime
 
 @attr.dataclass
 class User:
@@ -10,7 +11,14 @@ class User:
 class Chat:
     chat_id = int
     creator_id = int
+    title: str
+    description: str
     users_list = list
     users_left = list
     messages = list
 
+@attr.dataclass
+class message:
+    author_id: int
+    text: str
+    date: datetime.datetime

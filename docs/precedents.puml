@@ -10,7 +10,6 @@ rectangle "Чат"{
     usecase "Обновить чат" as update_chat
     usecase "Удалить чат" as delete_chat
     usecase "Получить информацию" as chat_information
-    usecase "Вернуться в чат" as return_chat
     usecase "Выйти из чата" as leave_chat
     usecase "Посмотреть участников" as see_users
     usecase "Отправить сообщение" as send_message
@@ -33,7 +32,6 @@ guest -- authorization
 user -- create_chat
 user -- chat_information
 user -- see_users
-user -- return_chat
 user -- leave_chat
 user -- send_message
 user -- list_messages
@@ -45,7 +43,6 @@ creator -- add_user
 
 creator -- chat_information
 creator -- see_users
-creator -- return_chat
 creator -- leave_chat
 creator -- send_message
 creator -- list_messages
