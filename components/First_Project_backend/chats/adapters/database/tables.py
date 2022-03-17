@@ -5,7 +5,8 @@
 Здесь хранятся списки, имитирующие базу данных
 """
 
-users = list()
+users_base = list()
 
-chats = list()
+chats_base = list()
+
 

@@ -4,36 +4,39 @@ from typing import Optional
 
 from components.First_Project_backend.chats.application import interfaces
 from components.First_Project_backend.chats.application.dataclasses import User, Chat, Message
-from components.First_Project_backend.chats.adapters.database.tables import chats, users
+from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base
 
 
 class UsersRepo(interfaces.UsersRepo):
 
     def create_user(self, name: str):
-        n = len(users)
+        n = len(users_base)
         new_user = User(n, name)
-        users.append(new_user)
+        users_base.append(new_user)
 
     def get_by_id(self, id: int) -> User:
-        return users[id]
+        return users_base[id]
 
 class ChatsRepo(interfaces.ChatsRepo):
 
     def create_chat(self, user_owner: User, title: str, description: str):
-        n = len(chats)
+        n = len(chats_base)
         new_chat = Chat(id=n, creator_id=user_owner.id, title=title, description=description,
                         users_list=list(), users_left=list(), messages=list())
         new_chat.users_list.append(user_owner)
-        chats.append(new_chat)
+        chats_base.append(new_chat)
 
     def delete_chat(self, user_init: User, id_chat: int):
         if chats[id_chat].creator_id == user_init.id:
-            del chats[id_chat]
+            del chats_base[id_chat]
         else:
             raise Exception("Нет прав для удаления")
 
     def get_chat(self, id_chat: int) -> Chat:
-        return chats[id_chat]
+        return chats_base[id_chat].title
+
+    def get_len(self):
+        return len(chats_base)
 
 
 class ChatRepo(interfaces.ChatRepo):
@@ -77,12 +80,12 @@ class ChatRepo(interfaces.ChatRepo):
             return users_list
 
 
-    def send_message(self, user_init: User, message: str):
-        if user_init not in self.my_chat.users_list:
-            raise Exception("Пользователь не может отправить сообщение")
-        else:
-            my_message = Message(user_init.name, message, datetime.datetime.now())
-            self.my_chat.messages.append(my_message)
+    def send_message(self, user_name: str, message: str):
+        # if user_init not in self.my_chat.users_list:
+        #     raise Exception("Пользователь не может отправить сообщение")
+        # else:
+        my_message = Message(user_name, message, datetime.datetime.now())
+        self.my_chat.messages.append(my_message)
 
 
 

@@ -54,3 +54,7 @@ class ChatsRepo(ABC):
     @abstractmethod
     def get_chat(self, id_chat: int) -> Chat:
         pass
+
+    @abstractmethod
+    def get_len(self):
+        pass

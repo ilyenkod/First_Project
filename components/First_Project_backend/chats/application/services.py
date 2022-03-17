@@ -1,11 +1,12 @@
 from classic.components import component
 from typing import Optional
 
-from dataclasses import User, Chat, Message
+
+from components.First_Project_backend.chats.application.dataclasses import User, Chat, Message
 
 from components.First_Project_backend.chats.application import interfaces
 from components.First_Project_backend.chats.adapters.database.repositories import UsersRepo, ChatRepo, ChatsRepo
-from components.First_Project_backend.chats.adapters.database.tables import chats, users
+from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base
 
 
 
@@ -38,6 +39,9 @@ class Chats:
     def get_chat_by_id(self, id_chat: int) -> Chat:
         return self.chats_repo.get_chat(id_chat)
 
+    def get_len(self):
+        return self.chats_repo.get_len()
+
 
 class Chat:
 
@@ -57,8 +61,8 @@ class Chat:
     def get_users(self, user_init: User):
         self.chat_repo.get_users(user_init)
 
-    def send_message(self, user_init: User, message: str):
-        self.chat_repo.send_message(user_init, message)
+    def send_message(self, user_name: str, message: str):
+        self.chat_repo.send_message(user_name, message)
 
     def get_messages(self, user_init: User):
         return self.chat_repo.get_messages(user_init)
