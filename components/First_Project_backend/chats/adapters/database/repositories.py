@@ -1,5 +1,6 @@
 from classic.components import component
 import datetime
+from typing import Optional
 
 from components.First_Project_backend.chats.application import interfaces
 from components.First_Project_backend.chats.application.dataclasses import User, Chat, Message
