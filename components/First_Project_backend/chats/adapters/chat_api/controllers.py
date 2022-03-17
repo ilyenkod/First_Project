@@ -36,11 +36,8 @@ class SendMessage:
 
     def on_post(self, req, resp):
         mess = req.get_media()
-        message = mess["Message"]
-        author = mess["Author"]
-        self.chat.send_message(message, author)
+        self.chat.send_message(mess["Message"], mess["Author"])
         resp.status = falcon.HTTP_201
-        # resp.location = f'/users/{new_id}'
 
 
 
