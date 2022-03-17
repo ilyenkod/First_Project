@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from .dataclasses import User, Chat
-
+from typing import Optional
 
 class UsersRepo(ABC):
 
@@ -16,7 +16,7 @@ class UsersRepo(ABC):
 class ChatRepo(ABC):
 
     @abstractmethod
-    def update_information(self):
+    def update_information(self, user_init: User, title: Optional[str] = None, description: Optional[str] = None):
         pass
 
     @abstractmethod
@@ -28,7 +28,7 @@ class ChatRepo(ABC):
         pass
 
     @abstractmethod
-    def get_users(self):
+    def get_users(self, user_init: User):
         pass
 
     @abstractmethod
@@ -36,7 +36,7 @@ class ChatRepo(ABC):
         pass
 
     @abstractmethod
-    def get_message(self):
+    def get_messages(self, user_init: User):
         pass
 
 
