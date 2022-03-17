@@ -5,7 +5,7 @@ from .dataclasses import User, Chat
 class UsersRepo(ABC):
 
     @abstractmethod
-    def create_user(self, id: int, name: str) -> User:
+    def create_user(self, name: str):
         pass
 
     @abstractmethod
@@ -44,7 +44,7 @@ class ChatRepo(ABC):
 class ChatsRepo(ABC):
 
     @abstractmethod
-    def create_chat(self, user_owner: User, id_chat: int):
+    def create_chat(self, user_owner: User):
         pass
 
     @abstractmethod

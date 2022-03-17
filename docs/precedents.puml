@@ -25,27 +25,29 @@ rectangle "Авторизация" {
 actor "Гость" as guest
 actor "Создатель" as creator
 actor "Пользователь" as user
+actor "Участник чата" as user_chat
 
 guest -- registration
 guest -- authorization
 
 user -- create_chat
-user -- chat_information
-user -- see_users
-user -- leave_chat
-user -- send_message
-user -- list_messages
 
-creator -- create_chat
+user_chat-- chat_information
+user_chat-- see_users
+user_chat-- leave_chat
+user_chat-- send_message
+user_chat-- list_messages
+
 creator -- update_chat
 creator -- delete_chat
 creator -- add_user
 
-creator -- chat_information
-creator -- see_users
-creator -- leave_chat
-creator -- send_message
-creator -- list_messages
+creator -- user_chat
+authorization --> user
+
+
+user --> user_chat
+
 
 
 @enduml

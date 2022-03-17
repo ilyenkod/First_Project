@@ -1,24 +1,26 @@
 import attr
 import datetime
+from typing import List, Optional
+
 
 @attr.dataclass
 class User:
-    user_id: int
+    id: int
     name: str
 
 
 @attr.dataclass
 class Chat:
-    chat_id = int
+    id = int
     creator_id = int
     title: str
     description: str
-    users_list = list
-    users_left = list
-    messages = list
+    users_list = Optional[List]
+    users_left = Optional[List]
+    messages = Optional[List]
 
 @attr.dataclass
-class message:
-    author_id: int
+class Message:
+    id: int
     text: str
     date: datetime.datetime
