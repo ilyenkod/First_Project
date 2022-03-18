@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
-from .dataclasses import User, Chat
 from typing import Optional
+
+from .dataclasses import User
+
 
 class UsersRepo(ABC):
 
@@ -39,7 +41,6 @@ class ChatRepo(ABC):
     @abstractmethod
     def leave_chat(self, chat_id: int, user_id: int):
         pass
-
 
 
 class ChatsRepo(ABC):

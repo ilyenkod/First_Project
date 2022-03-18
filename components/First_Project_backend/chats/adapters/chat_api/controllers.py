@@ -1,13 +1,11 @@
 import base64
-import hashlib
 import json
-import falcon
 
+import falcon
 from classic.components import component
-from wsgiref.simple_server import make_server
 
 from components.First_Project_backend.chats.application import services
-from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base
+
 
 def return_user_id(auth_hashed_data: str, login=True):
     auth_hashed_data = auth_hashed_data.split()[1]
@@ -26,21 +24,16 @@ def return_user_id(auth_hashed_data: str, login=True):
         return services.UserInfo.parse_obj(for_return)
 
 
-
-
 @component
 class AddUser:
 
     users: services.Users
-    # def __init__(self, users: services.Users):
-    #     self.users = users
 
     #Добавить пользователя
     def on_post(self, req, resp):
         try:
             new_user = req.get_media()
             user_info = services.UserInfo.parse_obj(new_user)
-            #new_user = return_user_id(req.headers.get('AUTHORIZATION'), login=False)
             self.users.create_user(user_info)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Сan't add a user")
@@ -51,10 +44,6 @@ class Chats:
 
     chats: services.Chats
     chat: services.Chat
-
-    # def __init__(self, chats: services.Chats, chat: services.Chat):
-    #     self.chats = chats
-    #     self.chat = chat
 
     #Удалить чат
     def on_delete(self, req, resp):
@@ -107,8 +96,6 @@ class Chats:
 class ChatUsers:
 
     chat: services.Chat
-    # def __init__(self, chat: services.Chat):
-    #     self.chat = chat
 
     #Добавить пользователя в чат
     def on_post(self, req, resp):
@@ -147,9 +134,8 @@ class ChatUsers:
 
 @component
 class Message:
+
     chat: services.Chat
-    # def __init__(self, chat: services.Chat):
-    #     self.chat = chat
 
     #Отправить сообщение
     def on_post(self, req, resp):

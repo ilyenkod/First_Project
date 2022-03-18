@@ -1,7 +1,9 @@
 from wsgiref.simple_server import make_server
-from components.First_Project_backend.chats.adapters.chat_api import app
+
 from components.First_Project_backend.chats.adapters import database
+from components.First_Project_backend.chats.adapters.chat_api import app
 from components.First_Project_backend.chats.application import services
+
 
 class DB:
     user_repo = database.repositories.UsersRepo()

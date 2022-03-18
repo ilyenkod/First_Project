@@ -1,6 +1,7 @@
-import attr
 import datetime
 from typing import List, Optional
+
+import attr
 
 
 @attr.dataclass
@@ -11,7 +12,6 @@ class User:
 
 @attr.dataclass
 class Chat:
-
     id: int
     creator_id: int
     title: str
@@ -19,7 +19,6 @@ class Chat:
     users_list : Optional[List]
     users_left : Optional[List]
     messages : Optional[List]
-
 
 
 @attr.dataclass

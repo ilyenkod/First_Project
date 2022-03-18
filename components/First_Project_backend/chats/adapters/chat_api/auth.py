@@ -1,6 +1,7 @@
 import base64
 
 import falcon
+
 from components.First_Project_backend.chats.adapters.database.tables import users_log
 
 
@@ -32,6 +33,3 @@ class Middleware:
                 pass
             else:
                 raise falcon.HTTPUnauthorized
-
-
-

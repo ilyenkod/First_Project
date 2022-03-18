@@ -1,8 +1,8 @@
 import pytest
-from unittest.mock import Mock
 
-from components.First_Project_backend.chats.application import interfaces, services
 from components.First_Project_backend.chats.adapters.database import repositories
+from components.First_Project_backend.chats.application import services
+
 
 @pytest.fixture(scope='function')
 def users_repo():

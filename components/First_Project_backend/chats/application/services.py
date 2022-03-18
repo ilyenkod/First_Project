@@ -1,12 +1,7 @@
+from classic.app import DTO
 from classic.components import component
-from typing import Optional
-from classic.app import DTO, validate_with_dto
-
-from components.First_Project_backend.chats.application.dataclasses import User, Chat, Message
 
 from components.First_Project_backend.chats.application import interfaces
-from components.First_Project_backend.chats.adapters.database.repositories import UsersRepo, ChatRepo, ChatsRepo
-from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base
 
 
 class MessageInfo(DTO):
@@ -48,8 +43,6 @@ class User_initiator(DTO):
 class Users:
 
     users_repo: interfaces.UsersRepo
-    # def __init__(self, users_repo: interfaces.UsersRepo):
-    #     self.users_repo = users_repo
 
     def create_user(self, user_info: UserInfo):
         self.users_repo.create_user(user_info.name, user_info.password)
@@ -59,8 +52,7 @@ class Users:
 class Chats:
 
     chats_repo: interfaces.ChatsRepo
-    # def __init__(self, chats_repo: interfaces.ChatsRepo):
-    #     self.chats_repo = chats_repo
+
 
     def create_chat(self, chat_info: ChatInfo, user_id: User_initiator):
         self.chats_repo.create_chat(user_id.id, chat_info.title, chat_info.description)
@@ -75,8 +67,6 @@ class Chats:
 class Chat:
 
     chat_repo: interfaces.ChatRepo
-    # def __init__(self, chat_repo: interfaces.ChatRepo):
-    #     self.chat_repo = chat_repo
 
     def update_information(self, chat_update: ChatUpdate, user_id: User_initiator):
         self.chat_repo.update_information(user_id.id, chat_update.chat_id,

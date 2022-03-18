@@ -1,10 +1,10 @@
-from classic.components import component
 import datetime
 from typing import Optional
 
+from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base, users_log
 from components.First_Project_backend.chats.application import interfaces
 from components.First_Project_backend.chats.application.dataclasses import User, Chat, Message
-from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base, users_log
+
 
 def get_user_by_id(in_id: int):
     for user in users_base:
@@ -56,11 +56,6 @@ class ChatsRepo(interfaces.ChatsRepo):
 
 
 class ChatRepo(interfaces.ChatRepo):
-
-    #my_chat: Chat
-
-    # def __init__(self, my_chat: Chat):
-    #     self.my_chat = my_chat
 
     def update_information(self, chat_id: int, user_init: int, title: Optional[str] = None,
                            description: Optional[str] = None):

@@ -1,7 +1,7 @@
 import pytest
 
-from components.First_Project_backend.chats.adapters.database.tables import chats_base
 from components.First_Project_backend.chats.application import services
+
 
 def test_get_information(service_chat, filin_db):
     user = services.User_initiator(id=0)

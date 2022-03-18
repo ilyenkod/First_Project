@@ -4,7 +4,6 @@ from components.First_Project_backend.chats.adapters.database.tables import chat
 from components.First_Project_backend.chats.application import services
 
 
-
 def test_create_chat(service_user, service_chats):
     user1 = services.UserInfo(name="Dima", password="123")
     service_user.create_user(user1)
