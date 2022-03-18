@@ -31,8 +31,6 @@ class UsersRepo(interfaces.UsersRepo):
         users_base.append(new_user)
         users_log.append(for_auth)
 
-    def get_by_id(self, id: int) -> User:
-        return users_base[id]
 
 class ChatsRepo(interfaces.ChatsRepo):
 
@@ -52,8 +50,6 @@ class ChatsRepo(interfaces.ChatsRepo):
         else:
             raise Exception("Нет прав для удаления")
 
-    def get_chat(self, id_chat: int) -> Chat:
-        return chats_base[id_chat]
 
     def get_len(self):
         return len(chats_base)
@@ -66,15 +62,16 @@ class ChatRepo(interfaces.ChatRepo):
     # def __init__(self, my_chat: Chat):
     #     self.my_chat = my_chat
 
-    def update_information(self, chat_id: int, user_init: User, title: Optional[str] = None,
+    def update_information(self, chat_id: int, user_init: int, title: Optional[str] = None,
                            description: Optional[str] = None):
-        if user_init.id != self.my_chat.creator_id:
+        my_chat = get_chat_by_id(chat_id)
+        if user_init != my_chat.creator_id:
             raise Exception("Пользователь не может редактировать чат")
         else:
             if title is not None:
-                self.my_chat.title = title
+                my_chat.title = title
             if description is not None:
-                self.my_chat.description = description
+                my_chat.description = description
 
 
     def get_information(self, chat_id: int, user_init_id: id):

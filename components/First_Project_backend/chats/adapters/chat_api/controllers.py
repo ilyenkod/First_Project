@@ -79,6 +79,14 @@ class Chats:
         resp.body = json.dumps(for_return)
         resp.status = falcon.HTTP_200
 
+    def on_put(self, req, resp):
+        try:
+            update = req.get_media()
+            chat_update = services.ChatUpdate.parse_obj(update)
+            self.chat.update_information(chat_update)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Can't put chat information")
+        resp.status = falcon.HTTP_204
 
 
 

@@ -8,15 +8,11 @@ class UsersRepo(ABC):
     def create_user(self, name: str):
         pass
 
-    @abstractmethod
-    def get_by_id(self, id: int) -> User:
-        pass
-
 
 class ChatRepo(ABC):
 
     @abstractmethod
-    def update_information(self, chat_id: int, user_init: User, title: Optional[str] = None,
+    def update_information(self, chat_id: int, user_init: int, title: Optional[str] = None,
                            description: Optional[str] = None):
         pass
 
@@ -50,10 +46,6 @@ class ChatsRepo(ABC):
 
     @abstractmethod
     def delete_chat(self, user_init: User, id_chat: int):
-        pass
-
-    @abstractmethod
-    def get_chat(self, id_chat: int) -> Chat:
         pass
 
     @abstractmethod
