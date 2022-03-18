@@ -1,10 +1,7 @@
-import json
 import base64
-import hashlib
+
 import falcon
-
 from components.First_Project_backend.chats.adapters.database.tables import users_log
-
 
 
 def check_password(data: dict):

@@ -114,8 +114,6 @@ class ChatRepo(interfaces.ChatRepo):
         my_message = Message(my_user.name, message, datetime.datetime.now())
         my_chat.messages.append(my_message)
 
-
-
     def get_messages(self, user_init: int, chat_id: int):
         my_user = get_user_by_id(user_init)
         my_chat = get_chat_by_id(chat_id)
