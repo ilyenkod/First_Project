@@ -116,11 +116,18 @@ class ChatRepo(interfaces.ChatRepo):
 
 
 
-    def get_messages(self, user_init: User):
-        if user_init not in self.my_chat.users_list:
+    def get_messages(self, user_init: int, chat_id: int):
+        my_user = get_user_by_id(user_init)
+        my_chat = get_chat_by_id(chat_id)
+        if my_user not in my_chat.users_list:
             raise Exception("Пользователь не может получить список сообщений")
         else:
-            return self.my_chat.return_messages_list()
+            message_list = {
+                "messages": []
+            }
+            for i in my_chat.messages:
+                message_list["messages"].append(i.text)
+            return message_list
 
     def leave_chat(self, chat_id: int, user_id: int):
         my_chat = get_chat_by_id(chat_id)

@@ -40,6 +40,9 @@ class ChatAddUser(DTO):
 class UsersList(DTO):
     users: list
 
+class MessageList(DTO):
+    messages: list
+
 
 class Users:
 
@@ -94,8 +97,12 @@ class Chat:
     def send_message(self, message: MessageInfo):
         self.chat_repo.send_message(message.author, message.text, message.chat_id)
 
-    def get_messages(self, user_init: User):
-        return self.chat_repo.get_messages(user_init)
+    def get_messages(self, message_info: ChatActionInfo):
+        information = self.chat_repo.get_messages(message_info.initiator_id, message_info.chat_id)
+        print(type(information))
+        print(information)
+        for_return = MessageList.parse_obj(information)
+        return for_return
 
     def leave_chat(self, chat_action: ChatActionInfo):
         self.chat_repo.leave_chat(chat_action.chat_id, chat_action.initiator_id)

@@ -118,4 +118,18 @@ class Message:
             raise falcon.HTTPNotFound(title="Can't add in chat")
         resp.status = falcon.HTTP_201
 
+    def on_get(self, req, resp):
+        # try:
+        #     info = req.get_media()
+        #     message_info = services.ChatActionInfo.parse_obj(info)
+        #     message_information = self.chat.get_messages(message_information)
+        # except Exception as e:
+        #     raise falcon.HTTPNotFound(title="Can't get list of users")
+        info = req.get_media()
+        message_info = services.ChatActionInfo.parse_obj(info)
+        message_information = self.chat.get_messages(message_info)
+        for_return = {"messages": message_information.messages}
+        resp.body = json.dumps(for_return)
+        resp.status = falcon.HTTP_200
+
 
