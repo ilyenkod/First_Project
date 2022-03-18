@@ -20,9 +20,10 @@ class ChatInfo(DTO):
     title: str
     description: str
 
-class ChatDeleteInfo(DTO):
+class ChatActionInfo(DTO):
     initiator_id: int
     chat_id: int
+
 
 
 
@@ -48,7 +49,7 @@ class Chats:
     def create_chat(self, chat_info: ChatInfo):
         self.chats_repo.create_chat(chat_info.creator_id, chat_info.title, chat_info.description)
 
-    def delete_chat(self, chat_delete_info: ChatDeleteInfo):
+    def delete_chat(self, chat_delete_info: ChatActionInfo):
         self.chats_repo.delete_chat(chat_delete_info.initiator_id, chat_delete_info.chat_id)
 
     def get_chat_by_id(self, id_chat: int) -> Chat:
@@ -67,8 +68,10 @@ class Chat:
     def update_information(self, user_init: User, title: Optional[str] = None, description: Optional[str] = None):
         self.chat_repo.update_information(user_init, title, description)
 
-    def get_information(self, user_init: User):
-        return self.chat_repo.get_information(user_init)
+    def get_information(self, chat_init_info: ChatActionInfo):
+        information = self.chat_repo.get_information(chat_init_info.chat_id, chat_init_info.initiator_id)
+        for_return = ChatInfo.parse_obj(information)
+        return for_return
 
     def add_user(self, user_init: User, user: User):
         self.chat_repo.add_user(user_init, user)

@@ -21,7 +21,7 @@ class ChatRepo(ABC):
         pass
 
     @abstractmethod
-    def get_information(self, chat_id: int, user_init: User):
+    def get_information(self, chat_id: int, user_init_id: int):
         pass
 
     @abstractmethod

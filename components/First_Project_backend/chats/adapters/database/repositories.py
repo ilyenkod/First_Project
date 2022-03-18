@@ -72,12 +72,15 @@ class ChatRepo(interfaces.ChatRepo):
                 self.my_chat.description = description
 
 
-    def get_information(self, chat_id: int, user_init: User):
-        my_chat = chats_base[chat_id]
-        if user_init not in self.my_chat.users_list:
+    def get_information(self, chat_id: int, user_init_id: id):
+        my_chat = get_chat_by_id(chat_id)
+        my_user = get_user_by_id(user_init_id)
+        if my_user not in my_chat.users_list:
             raise Exception("Пользователь не может получить информацию о чате")
         else:
-            return self.my_chat.title, self.my_chat.description
+            for_return = {'creator_id': my_chat.creator_id, 'title': my_chat.title,
+                          'description': my_chat.description}
+            return  for_return
 
 
     def add_user(self, user_init: User, user: User):

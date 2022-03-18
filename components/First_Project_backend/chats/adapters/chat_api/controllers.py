@@ -42,12 +42,13 @@ class AddUser:
 
 class Chats:
 
-    def __init__(self, chats: services.Chats):
+    def __init__(self, chats: services.Chats, chat: services.Chat):
         self.chats = chats
+        self.chat = chat
 
     def on_delete(self, req, resp):
         info = req.get_media()
-        chat_delete_info = services.ChatDeleteInfo.parse_obj(info)
+        chat_delete_info = services.ChatActionInfo.parse_obj(info)
         self.chats.delete_chat(chat_delete_info)
         resp.status = falcon.HTTP_204
 
@@ -55,6 +56,15 @@ class Chats:
         new_chat = req.get_media()
         chat_info = services.ChatInfo.parse_obj(new_chat)
         self.chats.create_chat(chat_info)
+
+    def on_get(self, req, resp):
+        info = req.get_media()
+        chat_init_info = services.ChatActionInfo.parse_obj(info)
+        chat_information = self.chat.get_information(chat_init_info)
+        for_return = {"title": chat_information.title, "description": chat_information.description}
+        resp.body = json.dumps(for_return)
+        resp.status = falcon.HTTP_200
+
 
 
 
