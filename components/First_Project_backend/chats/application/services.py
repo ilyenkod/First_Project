@@ -90,8 +90,8 @@ class Chat:
     def add_user(self, information: ChatAddUser, user_id: User_initiator):
         self.chat_repo.add_user(user_id.id, information.user_id, information.chat_id)
 
-    def get_users(self, user_init: ChatActionInfo, user_id: User_initiator):
-        information = self.chat_repo.get_users(user_id.id, user_init.chat_id)
+    def get_users(self, chat_in: ChatActionInfo, user_id: User_initiator):
+        information = self.chat_repo.get_users(user_id.id, chat_in.chat_id)
         for_return = UsersList.parse_obj(information)
         return for_return
 
