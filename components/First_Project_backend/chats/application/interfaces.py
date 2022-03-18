@@ -16,15 +16,16 @@ class UsersRepo(ABC):
 class ChatRepo(ABC):
 
     @abstractmethod
-    def update_information(self, user_init: User, title: Optional[str] = None, description: Optional[str] = None):
+    def update_information(self, chat_id: int, user_init: User, title: Optional[str] = None,
+                           description: Optional[str] = None):
         pass
 
     @abstractmethod
-    def get_information(self, user_init: User):
+    def get_information(self, chat_id: int, user_init: User):
         pass
 
     @abstractmethod
-    def add_user(self, user_init: User, user: User):
+    def add_user(self, chat_id: int, user_init: User, user: User):
         pass
 
     @abstractmethod
@@ -32,7 +33,7 @@ class ChatRepo(ABC):
         pass
 
     @abstractmethod
-    def send_message(self, user_init: User, message: str):
+    def send_message(self, mes):
         pass
 
     @abstractmethod
@@ -44,7 +45,7 @@ class ChatRepo(ABC):
 class ChatsRepo(ABC):
 
     @abstractmethod
-    def create_chat(self, id: int, user_owner: User, title: str, description: str):
+    def create_chat(self, id: int, user_owner_id: int, title: str, description: str):
         pass
 
     @abstractmethod

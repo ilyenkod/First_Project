@@ -23,12 +23,12 @@ class Chat:
     def return_messages_list(self):
         messages_list = []
         for mes in self.messages:
-            messages_list.append((mes.name, mes.text, mes.date))
+            messages_list.append((mes.author, mes.text, mes.date))
         return messages_list
 
 
 @attr.dataclass
 class Message:
-    name: str
+    author: str
     text: str
     date: datetime.datetime

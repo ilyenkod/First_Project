@@ -1,12 +1,28 @@
 from classic.components import component
 from typing import Optional
-
+from classic.app import DTO, validate_with_dto
 
 from components.First_Project_backend.chats.application.dataclasses import User, Chat, Message
 
 from components.First_Project_backend.chats.application import interfaces
 from components.First_Project_backend.chats.adapters.database.repositories import UsersRepo, ChatRepo, ChatsRepo
 from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base
+
+class MessageInfo(DTO):
+    author: str
+    text: str
+
+class UserInfo(DTO):
+    name: str
+
+class ChatInfo(DTO):
+    creator_id: int
+    title: str
+    description: str
+
+class ChatDeleteInfo(DTO):
+    initiator_id: int
+    chat_id: int
 
 
 
@@ -16,9 +32,8 @@ class Users:
     def __init__(self, users_repo: interfaces.UsersRepo):
         self.users_repo = users_repo
 
-
-    def create_user(self, name: str):
-        self.users_repo.create_user(name)
+    def create_user(self, user_info: UserInfo):
+        self.users_repo.create_user(user_info.name)
 
     def get_user_by_id(self, id: int):
         return self.users_repo.get_by_id(id)
@@ -30,11 +45,11 @@ class Chats:
     def __init__(self, chats_repo: interfaces.ChatsRepo):
         self.chats_repo = chats_repo
 
-    def create_chat(self, user_owner: User, title: str, description: str):
-        self.chats_repo.create_chat(user_owner, title, description)
+    def create_chat(self, chat_info: ChatInfo):
+        self.chats_repo.create_chat(chat_info.creator_id, chat_info.title, chat_info.description)
 
-    def delete_chat(self, user_init: User, id_chat: int):
-        self.chats_repo.delete_chat(user_init, id_chat)
+    def delete_chat(self, chat_delete_info: ChatDeleteInfo):
+        self.chats_repo.delete_chat(chat_delete_info.initiator_id, chat_delete_info.chat_id)
 
     def get_chat_by_id(self, id_chat: int) -> Chat:
         return self.chats_repo.get_chat(id_chat)
@@ -61,8 +76,8 @@ class Chat:
     def get_users(self, user_init: User):
         self.chat_repo.get_users(user_init)
 
-    def send_message(self, user_name: str, message: str):
-        self.chat_repo.send_message(user_name, message)
+    def send_message(self, mes):
+        self.chat_repo.send_message(mes)
 
     def get_messages(self, user_init: User):
         return self.chat_repo.get_messages(user_init)
