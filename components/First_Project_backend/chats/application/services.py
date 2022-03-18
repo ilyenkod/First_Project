@@ -14,6 +14,7 @@ class MessageInfo(DTO):
 
 class UserInfo(DTO):
     name: str
+    password: str
 
 class ChatInfo(DTO):
     creator_id: int
@@ -34,7 +35,7 @@ class Users:
         self.users_repo = users_repo
 
     def create_user(self, user_info: UserInfo):
-        self.users_repo.create_user(user_info.name)
+        self.users_repo.create_user(user_info.name, user_info.password)
 
     def get_user_by_id(self, id: int):
         return self.users_repo.get_by_id(id)

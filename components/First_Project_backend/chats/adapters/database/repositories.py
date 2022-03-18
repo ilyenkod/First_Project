@@ -4,7 +4,7 @@ from typing import Optional
 
 from components.First_Project_backend.chats.application import interfaces
 from components.First_Project_backend.chats.application.dataclasses import User, Chat, Message
-from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base
+from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base, users_log
 
 def get_user_by_id(in_id: int):
     for user in users_base:
@@ -21,10 +21,15 @@ def get_chat_by_id(in_id: int):
 
 class UsersRepo(interfaces.UsersRepo):
 
-    def create_user(self, name: str):
+    def create_user(self, name: str, password: str):
         n = len(users_base)
         new_user = User(n, name)
+        for_auth = {
+            "login": str(n),
+            "password": password
+        }
         users_base.append(new_user)
+        users_log.append(for_auth)
 
     def get_by_id(self, id: int) -> User:
         return users_base[id]
