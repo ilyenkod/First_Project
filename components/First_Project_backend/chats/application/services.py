@@ -9,8 +9,9 @@ from components.First_Project_backend.chats.adapters.database.repositories impor
 from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base
 
 class MessageInfo(DTO):
-    author: str
+    author: int
     text: str
+    chat_id: int
 
 class UserInfo(DTO):
     name: str
@@ -90,8 +91,8 @@ class Chat:
         for_return = UsersList.parse_obj(information)
         return for_return
 
-    def send_message(self, mes):
-        self.chat_repo.send_message(mes)
+    def send_message(self, message: MessageInfo):
+        self.chat_repo.send_message(message.author, message.text, message.chat_id)
 
     def get_messages(self, user_init: User):
         return self.chat_repo.get_messages(user_init)

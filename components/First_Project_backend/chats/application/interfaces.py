@@ -29,7 +29,7 @@ class ChatRepo(ABC):
         pass
 
     @abstractmethod
-    def send_message(self, mes):
+    def send_message(self, user: int, message: str, chat_id: int):
         pass
 
     @abstractmethod

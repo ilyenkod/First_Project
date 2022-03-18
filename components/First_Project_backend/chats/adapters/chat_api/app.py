@@ -31,10 +31,13 @@ my_prom_users = UsersRepo()
 my_prom2_users = services.Users(my_prom_users)
 my_user = controllers.AddUser(my_prom2_users)
 
+my_message = controllers.Message(my_prom2_chat)
+
 
 app.add_route('/chats/', my_chats)
 app.add_route('/login/', my_user)
 app.add_route('/users/', user_chat)
+app.add_route('/messages/', my_message)
 
 with make_server('localhost', 8000, app) as httpd:
     print(f"server starting on http://localhost:{httpd.server_port}")

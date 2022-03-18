@@ -108,13 +108,11 @@ class ChatRepo(interfaces.ChatRepo):
             return users_list
 
 
-    def send_message(self, mess):
-        # if user_init not in self.my_chat.users_list:
-        #     raise Exception("Пользователь не может отправить сообщение")
-        # else:
-        print(mess.author)
-        my_message = Message(mess.author, mess.text, datetime.datetime.now())
-        self.my_chat.messages.append(my_message)
+    def send_message(self, user: int, message: str, chat_id: int):
+        my_user = get_user_by_id(user)
+        my_chat = get_chat_by_id(chat_id)
+        my_message = Message(my_user.name, message, datetime.datetime.now())
+        my_chat.messages.append(my_message)
 
 
 
