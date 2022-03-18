@@ -88,7 +88,7 @@ class ChatUsers:
             raise falcon.HTTPNotFound(title="Can't add in chat")
         resp.status = falcon.HTTP_201
 
-    #Удалить пользователя
+    #Пользователю уйти
     def on_delete(self, req, resp):
         try:
             info = req.get_media()
