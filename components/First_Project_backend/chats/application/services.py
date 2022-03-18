@@ -43,23 +43,23 @@ class UsersList(DTO):
 class MessageList(DTO):
     messages: list
 
-
+@component
 class Users:
 
-    # users_repo: interfaces.UsersRepo
-    def __init__(self, users_repo: interfaces.UsersRepo):
-        self.users_repo = users_repo
+    users_repo: interfaces.UsersRepo
+    # def __init__(self, users_repo: interfaces.UsersRepo):
+    #     self.users_repo = users_repo
 
     def create_user(self, user_info: UserInfo):
         self.users_repo.create_user(user_info.name, user_info.password)
 
 
-
+@component
 class Chats:
 
-    #chats_repo: interfaces.ChatsRepo
-    def __init__(self, chats_repo: interfaces.ChatsRepo):
-        self.chats_repo = chats_repo
+    chats_repo: interfaces.ChatsRepo
+    # def __init__(self, chats_repo: interfaces.ChatsRepo):
+    #     self.chats_repo = chats_repo
 
     def create_chat(self, chat_info: ChatInfo):
         self.chats_repo.create_chat(chat_info.creator_id, chat_info.title, chat_info.description)
@@ -70,12 +70,12 @@ class Chats:
     def get_len(self):
         return self.chats_repo.get_len()
 
-
+@component
 class Chat:
 
-    #chat_repo: interfaces.ChatRepo
-    def __init__(self, chat_repo: interfaces.ChatRepo):
-        self.chat_repo = chat_repo
+    chat_repo: interfaces.ChatRepo
+    # def __init__(self, chat_repo: interfaces.ChatRepo):
+    #     self.chat_repo = chat_repo
 
     def update_information(self, chat_update: ChatUpdate):
         self.chat_repo.update_information(chat_update.initiator_id, chat_update.chat_id,
@@ -99,8 +99,6 @@ class Chat:
 
     def get_messages(self, message_info: ChatActionInfo):
         information = self.chat_repo.get_messages(message_info.initiator_id, message_info.chat_id)
-        print(type(information))
-        print(information)
         for_return = MessageList.parse_obj(information)
         return for_return
 

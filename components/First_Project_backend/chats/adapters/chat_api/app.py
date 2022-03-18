@@ -14,10 +14,10 @@ def create_app( users: services.Users, chat: services.Chat, chats: services.Chat
 
     app = falcon.App(middleware=middlewares)
 
-    app.add_route('/chats/', controllers.Chats(chats, chat))
-    app.add_route('/login/', controllers.AddUser(users))
-    app.add_route('/users/', controllers.ChatUsers(chat))
-    app.add_route('/messages/', controllers.Message(chat))
+    app.add_route('/chats/', controllers.Chats(chats=chats, chat=chat))
+    app.add_route('/login/', controllers.AddUser(users=users))
+    app.add_route('/users/', controllers.ChatUsers(chat=chat))
+    app.add_route('/messages/', controllers.Message(chat=chat))
 
     return app
 

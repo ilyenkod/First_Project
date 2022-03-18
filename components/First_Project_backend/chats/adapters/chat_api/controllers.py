@@ -9,11 +9,12 @@ from components.First_Project_backend.chats.adapters.database.tables import chat
 
 
 
-
+@component
 class AddUser:
 
-    def __init__(self, users: services.Users):
-        self.users = users
+    users: services.Users
+    # def __init__(self, users: services.Users):
+    #     self.users = users
 
     #Добавить пользователя
     def on_post(self, req, resp):
@@ -25,11 +26,15 @@ class AddUser:
             raise falcon.HTTPNotFound(title="Сan't add a user")
         resp.status = falcon.HTTP_201
 
+@component
 class Chats:
 
-    def __init__(self, chats: services.Chats, chat: services.Chat):
-        self.chats = chats
-        self.chat = chat
+    chats: services.Chats
+    chat: services.Chat
+
+    # def __init__(self, chats: services.Chats, chat: services.Chat):
+    #     self.chats = chats
+    #     self.chat = chat
 
     #Удалить чат
     def on_delete(self, req, resp):
@@ -73,10 +78,12 @@ class Chats:
             raise falcon.HTTPNotFound(title="Can't put chat information")
         resp.status = falcon.HTTP_204
 
-
+@component
 class ChatUsers:
-    def __init__(self, chat: services.Chat):
-        self.chat = chat
+
+    chat: services.Chat
+    # def __init__(self, chat: services.Chat):
+    #     self.chat = chat
 
     #Добавить пользователя в чат
     def on_post(self, req, resp):
@@ -110,11 +117,11 @@ class ChatUsers:
         resp.body = json.dumps(for_return)
         resp.status = falcon.HTTP_200
 
-
+@component
 class Message:
-
-    def __init__(self, chat: services.Chat):
-        self.chat = chat
+    chat: services.Chat
+    # def __init__(self, chat: services.Chat):
+    #     self.chat = chat
 
     #Отправить сообщение
     def on_post(self, req, resp):
