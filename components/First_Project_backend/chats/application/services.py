@@ -84,30 +84,3 @@ class Chat:
 
     def get_messages(self, user_init: User):
         return self.chat_repo.get_messages(user_init)
-
-
-# my_prom_users = UsersRepo()
-#
-# my_prom_chats = ChatsRepo()
-#
-#
-# my_users = Users(my_prom_users)
-# my_chats = Chats(my_prom_chats)
-#
-# my_users.create_user("Дима")
-#
-#
-# my_chats.create_chat(my_users.get_user_by_id(0), "First_chat", "FFF")
-# #print(my_chats.get_chat_by_id(0))
-# prom_chat = ChatRepo(my_chats.get_chat_by_id(0))
-# print(my_chats.get_chat_by_id(0).users_list)
-# my_chat = Chat(prom_chat)
-#
-# my_chat.send_message(my_users.get_user_by_id(0), "First message")
-#
-# print(my_chats.get_chat_by_id(0))
-#
-# print(my_chat.get_information(my_users.get_user_by_id(0)))
-
-# my_chats.delete_chat(my_users.get_user_by_id(0), 0)
-# print(my_chats)

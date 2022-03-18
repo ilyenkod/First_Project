@@ -35,9 +35,12 @@ class AddUser:
         self.users = users
 
     def on_post(self, req, resp):
-        new_user = req.get_media()
-        user_info = services.UserInfo.parse_obj(new_user)
-        self.users.create_user(user_info)
+        try:
+            new_user = req.get_media()
+            user_info = services.UserInfo.parse_obj(new_user)
+            self.users.create_user(user_info)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Сan't add a user")
         resp.status = falcon.HTTP_201
 
 class Chats:
@@ -47,20 +50,31 @@ class Chats:
         self.chat = chat
 
     def on_delete(self, req, resp):
-        info = req.get_media()
-        chat_delete_info = services.ChatActionInfo.parse_obj(info)
-        self.chats.delete_chat(chat_delete_info)
+        try:
+            info = req.get_media()
+            chat_delete_info = services.ChatActionInfo.parse_obj(info)
+            self.chats.delete_chat(chat_delete_info)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Can't delete chat")
         resp.status = falcon.HTTP_204
 
     def on_post(self, req, resp):
-        new_chat = req.get_media()
-        chat_info = services.ChatInfo.parse_obj(new_chat)
-        self.chats.create_chat(chat_info)
+        try:
+            new_chat = req.get_media()
+            chat_info = services.ChatInfo.parse_obj(new_chat)
+            self.chats.create_chat(chat_info)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Can't add a chat")
+        resp.status = falcon.HTTP_201
+
 
     def on_get(self, req, resp):
-        info = req.get_media()
-        chat_init_info = services.ChatActionInfo.parse_obj(info)
-        chat_information = self.chat.get_information(chat_init_info)
+        try:
+            info = req.get_media()
+            chat_init_info = services.ChatActionInfo.parse_obj(info)
+            chat_information = self.chat.get_information(chat_init_info)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Can't get chat information")
         for_return = {"title": chat_information.title, "description": chat_information.description}
         resp.body = json.dumps(for_return)
         resp.status = falcon.HTTP_200
