@@ -15,6 +15,7 @@ class AddUser:
     def __init__(self, users: services.Users):
         self.users = users
 
+    #Добавить пользователя
     def on_post(self, req, resp):
         try:
             new_user = req.get_media()
@@ -30,6 +31,7 @@ class Chats:
         self.chats = chats
         self.chat = chat
 
+    #Удалить чат
     def on_delete(self, req, resp):
         try:
             info = req.get_media()
@@ -39,6 +41,7 @@ class Chats:
             raise falcon.HTTPNotFound(title="Can't delete chat")
         resp.status = falcon.HTTP_204
 
+    #Создать чат
     def on_post(self, req, resp):
         try:
             new_chat = req.get_media()
@@ -48,7 +51,7 @@ class Chats:
             raise falcon.HTTPNotFound(title="Can't add a chat")
         resp.status = falcon.HTTP_201
 
-
+    #Получить информацию о чате
     def on_get(self, req, resp):
         try:
             info = req.get_media()
@@ -60,6 +63,7 @@ class Chats:
         resp.body = json.dumps(for_return)
         resp.status = falcon.HTTP_200
 
+    #Обновить информацию о чате
     def on_put(self, req, resp):
         try:
             update = req.get_media()
@@ -74,6 +78,7 @@ class ChatUsers:
     def __init__(self, chat: services.Chat):
         self.chat = chat
 
+    #Добавить пользователя в чат
     def on_post(self, req, resp):
         try:
             new_chat = req.get_media()
@@ -83,6 +88,7 @@ class ChatUsers:
             raise falcon.HTTPNotFound(title="Can't add in chat")
         resp.status = falcon.HTTP_201
 
+    #Удалить пользователя
     def on_delete(self, req, resp):
         try:
             info = req.get_media()
@@ -92,6 +98,7 @@ class ChatUsers:
             raise falcon.HTTPNotFound(title="Can't leave chat")
         resp.status = falcon.HTTP_204
 
+    #Получить список пользователей чата
     def on_get(self, req, resp):
         try:
             info = req.get_media()
@@ -109,6 +116,7 @@ class Message:
     def __init__(self, chat: services.Chat):
         self.chat = chat
 
+    #Отправить сообщение
     def on_post(self, req, resp):
         try:
             new_messsage = req.get_media()
@@ -118,16 +126,14 @@ class Message:
             raise falcon.HTTPNotFound(title="Can't add in chat")
         resp.status = falcon.HTTP_201
 
+    #Получить список сообщений чата
     def on_get(self, req, resp):
-        # try:
-        #     info = req.get_media()
-        #     message_info = services.ChatActionInfo.parse_obj(info)
-        #     message_information = self.chat.get_messages(message_information)
-        # except Exception as e:
-        #     raise falcon.HTTPNotFound(title="Can't get list of users")
-        info = req.get_media()
-        message_info = services.ChatActionInfo.parse_obj(info)
-        message_information = self.chat.get_messages(message_info)
+        try:
+            info = req.get_media()
+            message_info = services.ChatActionInfo.parse_obj(info)
+            message_information = self.chat.get_messages(message_info)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Can't get list of users")
         for_return = {"messages": message_information.messages}
         resp.body = json.dumps(for_return)
         resp.status = falcon.HTTP_200
