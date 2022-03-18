@@ -89,6 +89,39 @@ class Chats:
         resp.status = falcon.HTTP_204
 
 
+class ChatUsers:
+    def __init__(self, chat: services.Chat):
+        self.chat = chat
+
+    def on_post(self, req, resp):
+        try:
+            new_chat = req.get_media()
+            user_info = services.ChatAddUser.parse_obj(new_chat)
+            self.chat.add_user(user_info)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Can't add in chat")
+        resp.status = falcon.HTTP_201
+
+    def on_delete(self, req, resp):
+        try:
+            info = req.get_media()
+            chat_delete_info = services.ChatActionInfo.parse_obj(info)
+            self.chat.leave_chat(chat_delete_info)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Can't delete chat")
+        resp.status = falcon.HTTP_204
+
+    def on_get(self, req, resp):
+        try:
+            info = req.get_media()
+            users_init_info = services.ChatActionInfo.parse_obj(info)
+            users_information = self.chat.get_users(users_init_info)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Can't get chat information")
+        for_return = {"users": users_information.users}
+        resp.body = json.dumps(for_return)
+        resp.status = falcon.HTTP_200
+
 
 
 

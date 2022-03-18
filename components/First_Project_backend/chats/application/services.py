@@ -31,6 +31,13 @@ class ChatUpdate(DTO):
     title: str
     description: str
 
+class ChatAddUser(DTO):
+    init_id: int
+    user_id: int
+    chat_id: int
+
+class UsersList(DTO):
+    users: list
 
 
 class Users:
@@ -75,14 +82,19 @@ class Chat:
         for_return = ChatInfo.parse_obj(information)
         return for_return
 
-    def add_user(self, user_init: User, user: User):
-        self.chat_repo.add_user(user_init, user)
+    def add_user(self, information: ChatAddUser):
+        self.chat_repo.add_user(information.init_id, information.user_id, information.chat_id)
 
-    def get_users(self, user_init: User):
-        self.chat_repo.get_users(user_init)
+    def get_users(self, user_init: ChatActionInfo):
+        information = self.chat_repo.get_users(user_init.initiator_id, user_init.chat_id)
+        for_return = UsersList.parse_obj(information)
+        return for_return
 
     def send_message(self, mes):
         self.chat_repo.send_message(mes)
 
     def get_messages(self, user_init: User):
         return self.chat_repo.get_messages(user_init)
+
+    def leave_chat(self, chat_action: ChatActionInfo):
+        self.chat_repo.leave_chat(chat_action.chat_id, chat_action.initiator_id)

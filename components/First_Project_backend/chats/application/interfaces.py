@@ -21,11 +21,11 @@ class ChatRepo(ABC):
         pass
 
     @abstractmethod
-    def add_user(self, chat_id: int, user_init: User, user: User):
+    def add_user(self, user_init_id: int, user_id: int, chat_id: int):
         pass
 
     @abstractmethod
-    def get_users(self, user_init: User):
+    def get_users(self, user_init_id: int, chat_id: int):
         pass
 
     @abstractmethod
@@ -34,6 +34,10 @@ class ChatRepo(ABC):
 
     @abstractmethod
     def get_messages(self, user_init: User):
+        pass
+
+    @abstractmethod
+    def leave_chat(self, chat_id: int, user_id: int):
         pass
 
 
