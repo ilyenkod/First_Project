@@ -30,7 +30,7 @@ class AddUser:
     users: services.Users
 
     #Добавить пользователя
-    def on_post(self, req, resp):
+    def on_post_login(self, req, resp):
         try:
             new_user = req.get_media()
             user_info = services.UserInfo.parse_obj(new_user)
@@ -46,7 +46,7 @@ class Chats:
     chat: services.Chat
 
     #Удалить чат
-    def on_delete(self, req, resp):
+    def on_post_delete_chat(self, req, resp):
         try:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             info = req.get_media()
@@ -57,7 +57,7 @@ class Chats:
         resp.status = falcon.HTTP_204
 
     #Создать чат
-    def on_post(self, req, resp):
+    def on_post_create_chat(self, req, resp):
         try:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             new_chat = req.get_media()
@@ -69,7 +69,7 @@ class Chats:
         resp.status = falcon.HTTP_201
 
     #Получить информацию о чате
-    def on_get(self, req, resp):
+    def on_get_info_chat(self, req, resp):
         try:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             info = req.get_media()
@@ -82,7 +82,7 @@ class Chats:
         resp.status = falcon.HTTP_200
 
     #Обновить информацию о чате
-    def on_put(self, req, resp):
+    def on_post_info_chat(self, req, resp):
         try:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             update = req.get_media()
@@ -98,7 +98,7 @@ class ChatUsers:
     chat: services.Chat
 
     #Добавить пользователя в чат
-    def on_post(self, req, resp):
+    def on_post_add_user(self, req, resp):
         try:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             new_chat = req.get_media()
@@ -109,7 +109,7 @@ class ChatUsers:
         resp.status = falcon.HTTP_201
 
     #Пользователю уйти
-    def on_delete(self, req, resp):
+    def on_post_leave_chat(self, req, resp):
         try:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             info = req.get_media()
@@ -120,7 +120,7 @@ class ChatUsers:
         resp.status = falcon.HTTP_204
 
     #Получить список пользователей чата
-    def on_get(self, req, resp):
+    def on_get_users_chat(self, req, resp):
         try:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             info = req.get_media()
@@ -138,7 +138,7 @@ class Message:
     chat: services.Chat
 
     #Отправить сообщение
-    def on_post(self, req, resp):
+    def on_post_send_mess(self, req, resp):
         try:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             new_messsage = req.get_media()
@@ -149,7 +149,7 @@ class Message:
         resp.status = falcon.HTTP_201
 
     #Получить список сообщений чата
-    def on_get(self, req, resp):
+    def on_get_list_mess(self, req, resp):
         try:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             info = req.get_media()

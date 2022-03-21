@@ -1,14 +1,14 @@
 from wsgiref.simple_server import make_server
 
-from components.first_project_backend.chats.adapters import database
+from components.first_project_backend.chats.adapters.database import repositories
 from components.first_project_backend.chats.adapters.chat_api import app
 from components.first_project_backend.chats.application import services
 
 
 class DB:
-    user_repo = database.repositories.UsersRepo()
-    chat_repo = database.repositories.ChatRepo()
-    chats_repo = database.repositories.ChatsRepo()
+    user_repo = repositories.UsersRepo()
+    chat_repo = repositories.ChatRepo()
+    chats_repo = repositories.ChatsRepo()
 
 class Application:
 

@@ -20,7 +20,7 @@ class Middleware:
     def process_request(self, req, resp): pass
 
     def process_resource(self, req, resp, resource, params):
-        if req.path != '/login/':
+        if req.path != '/api/user/login':
             auth_hashed_data = req.headers.get('AUTHORIZATION')
             auth_hashed_data = auth_hashed_data.split()[1]
             auth_data = base64.b64decode(auth_hashed_data).decode('utf-8')
