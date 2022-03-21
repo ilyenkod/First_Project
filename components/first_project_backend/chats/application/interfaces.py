@@ -64,5 +64,5 @@ class ChatsRepo(ABC):
         pass
 
     @abstractmethod
-    def kick_user(self, user_id: int, chat_id: int):
+    def delete_user(self, user_id: int, chat_id: int):
         pass

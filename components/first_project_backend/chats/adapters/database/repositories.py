@@ -68,7 +68,7 @@ class ChatsRepo(interfaces.ChatsRepo):
         else:
             return False
 
-    def kick_user(self, user_id: int, chat_id: int):
+    def delete_user(self, user_id: int, chat_id: int):
         my_chat = get_chat_by_id(chat_id)
         my_user = get_user_by_id(user_id)
         my_chat.users_list.remove(my_user)

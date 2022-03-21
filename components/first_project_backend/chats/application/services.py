@@ -88,7 +88,7 @@ class Chats:
         elif self.chat_repo.in_leave_list(information.user_id, information.chat_id):
             raise Exception("Пользователь сам покинул чат")
         else:
-            self.chats_repo.kick_user(information.user_id, information.chat_id)
+            self.chats_repo.delete_user(information.user_id, information.chat_id)
 
 
 @component

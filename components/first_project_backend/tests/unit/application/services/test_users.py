@@ -10,10 +10,9 @@ def service(users_repo):
 
 def test_create_user(service):
     user = services.UserInfo(name="Dima", password="123")
-    firt_len = len(users_base)
     service.create_user(user)
-    second_len = len(users_base)
-    assert second_len == firt_len + 1
+    service.users_repo.create_user.assert_called_once()
+
 
 
 
