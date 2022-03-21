@@ -42,7 +42,6 @@ class ChatsRepo(interfaces.ChatsRepo):
             new_chat.users_list.append(get_user_by_id(user_owner_id))
             chats_base.append(new_chat)
 
-
     def delete_chat(self, user_init_id: id, id_chat: int):
         number_in_base = chats_base.index(get_chat_by_id(id_chat))
         del chats_base[number_in_base]
@@ -72,6 +71,11 @@ class ChatsRepo(interfaces.ChatsRepo):
         else:
             return False
 
+    def kick_user(self, user_id: int, chat_id: int):
+        my_chat = get_chat_by_id(chat_id)
+        my_user = get_user_by_id(user_id)
+        my_chat.users_list.remove(my_user)
+
 
 
 class ChatRepo(interfaces.ChatRepo):
@@ -83,7 +87,6 @@ class ChatRepo(interfaces.ChatRepo):
                       'description': my_chat.description}
         return  for_return
 
-
     def get_users(self, user_init_id: int, chat_id: int):
         my_chat = get_chat_by_id(chat_id)
         my_user = get_user_by_id(user_init_id)
@@ -94,13 +97,11 @@ class ChatRepo(interfaces.ChatRepo):
             users_list["users"].append(i.name)
         return users_list
 
-
     def send_message(self, user: int, message: str, chat_id: int):
         my_user = get_user_by_id(user)
         my_chat = get_chat_by_id(chat_id)
         my_message = Message(my_user.name, message, datetime.datetime.now())
         my_chat.messages.append(my_message)
-
 
     def get_messages(self, user_init: int, chat_id: int):
         my_user = get_user_by_id(user_init)
@@ -111,7 +112,6 @@ class ChatRepo(interfaces.ChatRepo):
         for i in my_chat.messages:
             message_list["messages"].append(i.text)
         return message_list
-
 
     def leave_chat(self, chat_id: int, user_id: int):
         my_chat = get_chat_by_id(chat_id)
@@ -130,15 +130,13 @@ class ChatRepo(interfaces.ChatRepo):
         else:
             return False
 
-    # def delete_user(self, user_init_id: int, user_id: int, chat_id: int):
-    #     my_chat = get_chat_by_id(chat_id)
-    #     my_user = get_user_by_id(user_id)
-    #     if user_init_id != my_chat.creator_id:
-    #         raise Exception("Пользователь не может удалить из чата другого пользователя")
-    #     elif my_user not in my_chat.users_list:
-    #         raise Exception("Пользователь не состоит в чате")
-    #     elif my_user in my_chat.users_left:
-    #         raise Exception("Пользователь сам покинул чат")
-    #     else:
-    #         my_chat.users_list.remove(my_user)
+    def in_leave_list(self, user_id: int, chat_id: int):
+        my_chat = get_chat_by_id(chat_id)
+        my_user = get_user_by_id(user_id)
+        if my_user in my_chat.users_left:
+            return True
+        else:
+            return False
+
+
 

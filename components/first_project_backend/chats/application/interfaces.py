@@ -1,8 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-from .dataclasses import User
-
 
 class UsersRepo(ABC):
 
@@ -26,7 +24,7 @@ class ChatRepo(ABC):
         pass
 
     @abstractmethod
-    def get_messages(self, user_init: User):
+    def get_messages(self, user_init: int, chat_id: int):
         pass
 
     @abstractmethod
@@ -37,10 +35,9 @@ class ChatRepo(ABC):
     def is_participant(self, user_id: int, chat_id: int):
         pass
 
-
-    # @abstractmethod
-    # def delete_user(self, user_init_id: int, user_id: int, chat_id: int):
-    #     pass
+    @abstractmethod
+    def in_leave_list(self, user_id: int, chat_id: int):
+        pass
 
 
 class ChatsRepo(ABC):
@@ -68,4 +65,8 @@ class ChatsRepo(ABC):
 
     @abstractmethod
     def is_owner(self, user_init_id: id, id_chat: int):
+        pass
+
+    @abstractmethod
+    def kick_user(self, user_id: int, chat_id: int):
         pass

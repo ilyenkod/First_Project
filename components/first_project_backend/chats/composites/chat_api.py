@@ -1,7 +1,7 @@
 from wsgiref.simple_server import make_server
 
-from components.first_project_backend.chats.adapters.database import repositories
 from components.first_project_backend.chats.adapters.chat_api import app
+from components.first_project_backend.chats.adapters.database import repositories
 from components.first_project_backend.chats.application import services
 
 

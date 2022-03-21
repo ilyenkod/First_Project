@@ -1,5 +1,3 @@
-import falcon
-
 from classic.http_api import App
 
 from components.first_project_backend.chats.adapters.chat_api import controllers

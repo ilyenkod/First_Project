@@ -1,7 +1,6 @@
 import base64
 
 import falcon
-
 from components.first_project_backend.chats.adapters.database.tables import users_log
 
 

@@ -1,5 +1,3 @@
-import pytest
-
 from components.first_project_backend.chats.adapters.database.tables import chats_base
 from components.first_project_backend.chats.application import services
 
@@ -17,6 +15,16 @@ def test_create_chat(service_user, service_chats):
     second_len = len(chats_base)
     assert second_len == firt_len + 1
 
+def test_delete_user(service_chat, filin_db, service_chats):
+    user_init = services.User_initiator(id=0)
+    user_add = services.ChatAddUser(user_id=1, chat_id=0)
+    chat_in = services.ChatActionInfo(chat_id=0)
+    service_chats.add_user(user_add, user_init)
+    first = service_chat.get_users(chat_in, user_init)
+    service_chats.delete_user(user_add, user_init)
+    second = service_chat.get_users(chat_in, user_init)
+    assert len(first.users) - 1 == len(second.users)
+
 def test_add_user(service_chat, filin_db, service_chats):
     user_init = services.User_initiator(id=0)
     user_add = services.ChatAddUser(user_id=1, chat_id=0)
@@ -25,6 +33,7 @@ def test_add_user(service_chat, filin_db, service_chats):
     service_chats.add_user(user_add, user_init)
     second = service_chat.get_users(chat_in, user_init)
     assert len(first.users) + 1 == len(second.users)
+
 
 def test_put_information(service_chat, filin_db, service_chats):
     user = services.User_initiator(id=0)

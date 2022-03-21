@@ -81,12 +81,21 @@ class Chats:
         else:
             self.chats_repo.add_user(user_id.id, information.user_id, information.chat_id)
 
+    def delete_user(self, information: ChatAddUser, user_id: User_initiator):
+        if not self.chats_repo.is_owner(user_id.id, information.chat_id):
+            raise Exception("Пользователь не может удалить из чата другого пользователя")
+        elif not self.chat_repo.is_participant(information.user_id, information.chat_id):
+            raise Exception("Пользователь не состоит в чате")
+        elif self.chat_repo.in_leave_list(information.user_id, information.chat_id):
+            raise Exception("Пользователь сам покинул чат")
+        else:
+            self.chats_repo.kick_user(information.user_id, information.chat_id)
+
 
 @component
 class Chat:
 
     chat_repo: interfaces.ChatRepo
-
 
     def get_information(self, chat_init_info: ChatActionInfo, user_id: User_initiator):
         if self.chat_repo.is_participant(user_id.id, chat_init_info.chat_id):
@@ -95,7 +104,6 @@ class Chat:
             return for_return
         else:
             raise Exception("Пользователь не может получить информацию о чате")
-
 
     def get_users(self, chat_in: ChatActionInfo, user_id: User_initiator):
         if self.chat_repo.is_participant(user_id.id, chat_in.chat_id):
@@ -118,7 +126,6 @@ class Chat:
             return for_return
         else:
             raise Exception("Пользователь не может получить список сообщений")
-
 
     def leave_chat(self, chat_action: ChatActionInfo, user_id: User_initiator):
         if self.chat_repo.is_participant(user_id.id, chat_action.chat_id):

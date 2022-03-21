@@ -3,7 +3,6 @@ import json
 
 import falcon
 from classic.components import component
-
 from components.first_project_backend.chats.application import services
 
 
@@ -101,6 +100,17 @@ class Chats:
             self.chats.add_user(user_info, user_id)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Can't add in chat")
+        resp.status = falcon.HTTP_201
+
+    #удалить пользователя
+    def on_post_delete_user(self, req, resp):
+        try:
+            user_id = return_user_id(req.headers.get('AUTHORIZATION'))
+            new_chat = req.get_media()
+            user_info = services.ChatAddUser.parse_obj(new_chat)
+            self.chats.delete_user(user_info, user_id)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Can't delete from chat")
         resp.status = falcon.HTTP_201
 
 @component
