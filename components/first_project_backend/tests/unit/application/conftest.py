@@ -1,7 +1,7 @@
 import pytest
 
-from components.First_Project_backend.chats.adapters.database import repositories
-from components.First_Project_backend.chats.application import services
+from components.first_project_backend.chats.adapters.database import repositories
+from components.first_project_backend.chats.application import services
 
 
 @pytest.fixture(scope='function')

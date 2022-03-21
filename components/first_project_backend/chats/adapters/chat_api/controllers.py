@@ -4,7 +4,7 @@ import json
 import falcon
 from classic.components import component
 
-from components.First_Project_backend.chats.application import services
+from components.first_project_backend.chats.application import services
 
 
 def return_user_id(auth_hashed_data: str, login=True):

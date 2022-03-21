@@ -1,7 +1,7 @@
 import pytest
 
-from components.First_Project_backend.chats.adapters.database.tables import chats_base
-from components.First_Project_backend.chats.application import services
+from components.first_project_backend.chats.adapters.database.tables import chats_base
+from components.first_project_backend.chats.application import services
 
 
 def test_create_chat(service_user, service_chats):

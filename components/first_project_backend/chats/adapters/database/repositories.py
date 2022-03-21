@@ -1,9 +1,9 @@
 import datetime
 from typing import Optional
 
-from components.First_Project_backend.chats.adapters.database.tables import chats_base, users_base, users_log
-from components.First_Project_backend.chats.application import interfaces
-from components.First_Project_backend.chats.application.dataclasses import User, Chat, Message
+from components.first_project_backend.chats.adapters.database.tables import chats_base, users_base, users_log
+from components.first_project_backend.chats.application import interfaces
+from components.first_project_backend.chats.application.dataclasses import User, Chat, Message
 
 
 def get_user_by_id(in_id: int):

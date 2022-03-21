@@ -1,6 +1,6 @@
 import pytest
 
-from components.First_Project_backend.chats.application import services
+from components.first_project_backend.chats.application import services
 
 
 def test_get_information(service_chat, filin_db):

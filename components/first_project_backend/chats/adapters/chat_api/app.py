@@ -1,8 +1,8 @@
 import falcon
 
-from components.First_Project_backend.chats.adapters.chat_api import controllers
-from components.First_Project_backend.chats.adapters.chat_api.auth import AddHeaderComponent, Middleware
-from components.First_Project_backend.chats.application import services
+from components.first_project_backend.chats.adapters.chat_api import controllers
+from components.first_project_backend.chats.adapters.chat_api.auth import AddHeaderComponent, Middleware
+from components.first_project_backend.chats.application import services
 
 
 def create_app( users: services.Users, chat: services.Chat, chats: services.Chats):

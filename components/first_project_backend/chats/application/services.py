@@ -1,7 +1,7 @@
 from classic.app import DTO
 from classic.components import component
 
-from components.First_Project_backend.chats.application import interfaces
+from components.first_project_backend.chats.application import interfaces
 
 
 class MessageInfo(DTO):
