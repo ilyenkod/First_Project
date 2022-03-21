@@ -14,7 +14,7 @@ class Application:
 
     users = services.Users(users_repo=DB.user_repo)
     chat = services.Chat(chat_repo=DB.chat_repo)
-    chats = services.Chats(chats_repo=DB.chats_repo)
+    chats = services.Chats(chats_repo=DB.chats_repo, chat_repo=DB.chat_repo)
 
 
 app = app.create_app(users=Application.users, chat=Application.chat, chats=Application.chats)

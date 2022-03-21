@@ -24,8 +24,8 @@ def service_user(users_repo):
     return services.Users(users_repo=users_repo)
 
 @pytest.fixture(scope='function')
-def service_chats(chats_repo):
-    return services.Chats(chats_repo=chats_repo)
+def service_chats(chats_repo, chat_repo):
+    return services.Chats(chats_repo=chats_repo, chat_repo=chat_repo)
 
 @pytest.fixture
 def for_delete(service_chats, service_user):

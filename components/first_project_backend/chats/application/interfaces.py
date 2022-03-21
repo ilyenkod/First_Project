@@ -14,16 +14,7 @@ class UsersRepo(ABC):
 class ChatRepo(ABC):
 
     @abstractmethod
-    def update_information(self, chat_id: int, user_init: int, title: Optional[str] = None,
-                           description: Optional[str] = None):
-        pass
-
-    @abstractmethod
     def get_information(self, chat_id: int, user_init_id: int):
-        pass
-
-    @abstractmethod
-    def add_user(self, user_init_id: int, user_id: int, chat_id: int):
         pass
 
     @abstractmethod
@@ -42,6 +33,15 @@ class ChatRepo(ABC):
     def leave_chat(self, chat_id: int, user_id: int):
         pass
 
+    @abstractmethod
+    def is_participant(self, user_id: int, chat_id: int):
+        pass
+
+
+    # @abstractmethod
+    # def delete_user(self, user_init_id: int, user_id: int, chat_id: int):
+    #     pass
+
 
 class ChatsRepo(ABC):
 
@@ -50,9 +50,22 @@ class ChatsRepo(ABC):
         pass
 
     @abstractmethod
-    def delete_chat(self, user_init: User, id_chat: int):
+    def delete_chat(self, user_init_id: int, id_chat: int):
         pass
 
     @abstractmethod
     def get_len(self):
+        pass
+
+    @abstractmethod
+    def update_information(self, chat_id: int, user_init: int, title: Optional[str] = None,
+                           description: Optional[str] = None):
+        pass
+
+    @abstractmethod
+    def add_user(self, user_init_id: int, user_id: int, chat_id: int):
+        pass
+
+    @abstractmethod
+    def is_owner(self, user_init_id: id, id_chat: int):
         pass

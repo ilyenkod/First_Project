@@ -87,15 +87,10 @@ class Chats:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             update = req.get_media()
             chat_update = services.ChatUpdate.parse_obj(update)
-            self.chat.update_information(chat_update, user_id)
+            self.chats.update_information(chat_update, user_id)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Can't put chat information")
         resp.status = falcon.HTTP_204
-
-@component
-class ChatUsers:
-
-    chat: services.Chat
 
     #Добавить пользователя в чат
     def on_post_add_user(self, req, resp):
@@ -103,10 +98,15 @@ class ChatUsers:
             user_id = return_user_id(req.headers.get('AUTHORIZATION'))
             new_chat = req.get_media()
             user_info = services.ChatAddUser.parse_obj(new_chat)
-            self.chat.add_user(user_info, user_id)
+            self.chats.add_user(user_info, user_id)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Can't add in chat")
         resp.status = falcon.HTTP_201
+
+@component
+class ChatUsers:
+
+    chat: services.Chat
 
     #Пользователю уйти
     def on_post_leave_chat(self, req, resp):
@@ -145,7 +145,7 @@ class Message:
             message_info = services.MessageInfo.parse_obj(new_messsage)
             self.chat.send_message(message_info, user_id)
         except Exception as e:
-            raise falcon.HTTPNotFound(title="Can't add in chat")
+            raise falcon.HTTPNotFound(title="Can't send message")
         resp.status = falcon.HTTP_201
 
     #Получить список сообщений чата

@@ -42,65 +42,57 @@ class ChatsRepo(interfaces.ChatsRepo):
             new_chat.users_list.append(get_user_by_id(user_owner_id))
             chats_base.append(new_chat)
 
+
     def delete_chat(self, user_init_id: id, id_chat: int):
-        now_chat = get_chat_by_id(id_chat)
-        if now_chat.creator_id == user_init_id:
-            number_in_base = chats_base.index(get_chat_by_id(id_chat))
-            del chats_base[number_in_base]
-        else:
-            raise Exception("Нет прав для удаления")
+        number_in_base = chats_base.index(get_chat_by_id(id_chat))
+        del chats_base[number_in_base]
 
 
     def get_len(self):
         return len(chats_base)
 
-
-class ChatRepo(interfaces.ChatRepo):
-
     def update_information(self, chat_id: int, user_init: int, title: Optional[str] = None,
                            description: Optional[str] = None):
         my_chat = get_chat_by_id(chat_id)
-        if user_init != my_chat.creator_id:
-            raise Exception("Пользователь не может редактировать чат")
-        else:
-            if title is not None:
-                my_chat.title = title
-            if description is not None:
-                my_chat.description = description
-
-
-    def get_information(self, chat_id: int, user_init_id: id):
-        my_chat = get_chat_by_id(chat_id)
-        my_user = get_user_by_id(user_init_id)
-        if my_user not in my_chat.users_list:
-            raise Exception("Пользователь не может получить информацию о чате")
-        else:
-            for_return = {'creator_id': my_chat.creator_id, 'title': my_chat.title,
-                          'description': my_chat.description}
-            return  for_return
-
+        if title is not None:
+            my_chat.title = title
+        if description is not None:
+            my_chat.description = description
 
     def add_user(self, user_init_id: int, user_id: int, chat_id: int):
         my_chat = get_chat_by_id(chat_id)
         my_user = get_user_by_id(user_id)
-        if user_init_id != my_chat.creator_id:
-            raise Exception("Пользователь не может добавить в чат другого пользователя")
+        my_chat.users_list.append(my_user)
+
+    def is_owner(self, user_init_id: id, id_chat: int):
+        my_chat = get_chat_by_id(id_chat)
+        my_user = get_user_by_id(user_init_id)
+        if my_chat.creator_id == my_user.id:
+            return True
         else:
-            my_chat.users_list.append(my_user)
+            return False
+
+
+
+class ChatRepo(interfaces.ChatRepo):
+
+    def get_information(self, chat_id: int, user_init_id: id):
+        my_chat = get_chat_by_id(chat_id)
+        my_user = get_user_by_id(user_init_id)
+        for_return = {'creator_id': my_chat.creator_id, 'title': my_chat.title,
+                      'description': my_chat.description}
+        return  for_return
 
 
     def get_users(self, user_init_id: int, chat_id: int):
         my_chat = get_chat_by_id(chat_id)
         my_user = get_user_by_id(user_init_id)
-        if my_user not in my_chat.users_list:
-            raise Exception("Пользователь не может получить список участников чата")
-        else:
-            users_list = {
-                "users": []
-            }
-            for i in my_chat.users_list:
-                users_list["users"].append(i.name)
-            return users_list
+        users_list = {
+            "users": []
+        }
+        for i in my_chat.users_list:
+            users_list["users"].append(i.name)
+        return users_list
 
 
     def send_message(self, user: int, message: str, chat_id: int):
@@ -109,27 +101,44 @@ class ChatRepo(interfaces.ChatRepo):
         my_message = Message(my_user.name, message, datetime.datetime.now())
         my_chat.messages.append(my_message)
 
+
     def get_messages(self, user_init: int, chat_id: int):
         my_user = get_user_by_id(user_init)
         my_chat = get_chat_by_id(chat_id)
-        if my_user not in my_chat.users_list:
-            raise Exception("Пользователь не может получить список сообщений")
-        else:
-            message_list = {
-                "messages": []
-            }
-            for i in my_chat.messages:
-                message_list["messages"].append(i.text)
-            return message_list
+        message_list = {
+            "messages": []
+        }
+        for i in my_chat.messages:
+            message_list["messages"].append(i.text)
+        return message_list
+
 
     def leave_chat(self, chat_id: int, user_id: int):
         my_chat = get_chat_by_id(chat_id)
         my_user = get_user_by_id(user_id)
-        if my_user not in my_chat.users_list:
-            raise Exception("Пользователь не состоит в чате")
-        elif my_user.id == my_chat.creator_id:
+        if my_user.id == my_chat.creator_id:
             chats_base.remove(my_chat)
         else:
             my_chat.users_list.remove(my_user)
             my_chat.users_left.append(my_user)
+
+    def is_participant(self, user_id: int, chat_id: int):
+        my_chat = get_chat_by_id(chat_id)
+        my_user = get_user_by_id(user_id)
+        if my_user in my_chat.users_list:
+            return True
+        else:
+            return False
+
+    # def delete_user(self, user_init_id: int, user_id: int, chat_id: int):
+    #     my_chat = get_chat_by_id(chat_id)
+    #     my_user = get_user_by_id(user_id)
+    #     if user_init_id != my_chat.creator_id:
+    #         raise Exception("Пользователь не может удалить из чата другого пользователя")
+    #     elif my_user not in my_chat.users_list:
+    #         raise Exception("Пользователь не состоит в чате")
+    #     elif my_user in my_chat.users_left:
+    #         raise Exception("Пользователь сам покинул чат")
+    #     else:
+    #         my_chat.users_list.remove(my_user)
 
