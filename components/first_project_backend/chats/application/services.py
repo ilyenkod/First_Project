@@ -3,7 +3,6 @@ from classic.components import component
 
 from components.first_project_backend.chats.application import interfaces
 
-
 class MessageInfo(DTO):
     text: str
     chat_id: int
@@ -78,6 +77,8 @@ class Chats:
             raise Exception("Пользователь не может добавить в чат другого пользователя")
         elif self.chat_repo.is_participant(information.user_id, information.chat_id):
             raise Exception("Пользователь уже в чате")
+        elif self.chat_repo.in_leave_list(information.user_id, information.chat_id):
+            raise Exception("Пользователь сам покинул чат")
         else:
             self.chats_repo.add_user(user_id.id, information.user_id, information.chat_id)
 

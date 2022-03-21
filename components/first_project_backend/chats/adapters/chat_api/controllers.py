@@ -30,12 +30,15 @@ class AddUser:
 
     #Добавить пользователя
     def on_post_login(self, req, resp):
-        try:
-            new_user = req.get_media()
-            user_info = services.UserInfo.parse_obj(new_user)
-            self.users.create_user(user_info)
-        except Exception as e:
-            raise falcon.HTTPNotFound(title="Сan't add a user")
+        # try:
+        #     new_user = req.get_media()
+        #     user_info = services.UserInfo.parse_obj(new_user)
+        #     self.users.create_user(user_info)
+        # except Exception as e:
+        #     raise falcon.HTTPNotFound(title="Сan't add a user")
+        new_user = req.get_media()
+        user_info = services.UserInfo.parse_obj(new_user)
+        self.users.create_user(user_info)
         resp.status = falcon.HTTP_201
 
 @component

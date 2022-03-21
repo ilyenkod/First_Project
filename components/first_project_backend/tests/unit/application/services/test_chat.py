@@ -47,9 +47,11 @@ def test_send_message(service_chat, filin_db):
     assert len(first.messages) + 1 == len(second.messages)
 
 
-def test_leave_and_delete(service_chat, filin_db, service_chats):
+def test_leave_and_delete(service_chat, filin_db, service_chats, service_user):
     user_init = services.User_initiator(id=0)
-    user_add = services.ChatAddUser(user_id=1, chat_id=0)
+    user3 = services.UserInfo(name="Dima", password="123")
+    service_user.create_user(user3)
+    user_add = services.ChatAddUser(user_id=2, chat_id=0)
     chat_in = services.ChatActionInfo(chat_id=0)
     service_chats.add_user(user_add, user_init)
     user_leave = services.User_initiator(id=0)
