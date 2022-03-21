@@ -30,15 +30,13 @@ class AddUser:
 
     #Добавить пользователя
     def on_post_login(self, req, resp):
-        # try:
-        #     new_user = req.get_media()
-        #     user_info = services.UserInfo.parse_obj(new_user)
-        #     self.users.create_user(user_info)
-        # except Exception as e:
-        #     raise falcon.HTTPNotFound(title="Сan't add a user")
-        new_user = req.get_media()
-        user_info = services.UserInfo.parse_obj(new_user)
-        self.users.create_user(user_info)
+        try:
+            new_user = req.get_media()
+            user_info = services.UserInfo.parse_obj(new_user)
+            self.users.create_user(user_info)
+        except Exception as e:
+            raise falcon.HTTPNotFound(title="Сan't add a user")
+        resp.body = "Пользователь создан"
         resp.status = falcon.HTTP_201
 
 @component
@@ -56,6 +54,7 @@ class Chats:
             self.chats.delete_chat(chat_delete_info, user_id)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Can't delete chat")
+        resp.body = "Чат удален"
         resp.status = falcon.HTTP_204
 
     #Создать чат
@@ -67,7 +66,7 @@ class Chats:
             self.chats.create_chat(chat_info, user_id)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Can't create a chat")
-
+        resp.body = "Чат создан"
         resp.status = falcon.HTTP_201
 
     #Получить информацию о чате
@@ -92,6 +91,7 @@ class Chats:
             self.chats.update_information(chat_update, user_id)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Can't put chat information")
+        resp.body = "Информация о чате обновлена"
         resp.status = falcon.HTTP_204
 
     #Добавить пользователя в чат
@@ -103,6 +103,7 @@ class Chats:
             self.chats.add_user(user_info, user_id)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Can't add in chat")
+        resp.body = "Пользователь добавлен в чат"
         resp.status = falcon.HTTP_201
 
     #удалить пользователя
@@ -114,6 +115,7 @@ class Chats:
             self.chats.delete_user(user_info, user_id)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Can't delete from chat")
+        resp.body = "Пользователь удален из чата"
         resp.status = falcon.HTTP_201
 
 @component
@@ -130,6 +132,7 @@ class ChatUsers:
             self.chat.leave_chat(chat_delete_info, user_id)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Can't leave chat")
+        resp.body = "Пользователь вышел из чата"
         resp.status = falcon.HTTP_204
 
     #Получить список пользователей чата
@@ -159,6 +162,7 @@ class Message:
             self.chat.send_message(message_info, user_id)
         except Exception as e:
             raise falcon.HTTPNotFound(title="Can't send message")
+        resp.body = "Сообщение отправлено"
         resp.status = falcon.HTTP_201
 
     #Получить список сообщений чата

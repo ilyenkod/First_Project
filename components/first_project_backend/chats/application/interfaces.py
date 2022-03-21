@@ -51,10 +51,6 @@ class ChatsRepo(ABC):
         pass
 
     @abstractmethod
-    def get_len(self):
-        pass
-
-    @abstractmethod
     def update_information(self, chat_id: int, user_init: int, title: Optional[str] = None,
                            description: Optional[str] = None):
         pass

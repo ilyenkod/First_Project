@@ -47,9 +47,6 @@ class ChatsRepo(interfaces.ChatsRepo):
         del chats_base[number_in_base]
 
 
-    def get_len(self):
-        return len(chats_base)
-
     def update_information(self, chat_id: int, user_init: int, title: Optional[str] = None,
                            description: Optional[str] = None):
         my_chat = get_chat_by_id(chat_id)

@@ -62,8 +62,6 @@ class Chats:
         else:
             raise Exception("Нет прав для удаления")
 
-    def get_len(self):
-        return self.chats_repo.get_len()
 
     def update_information(self, chat_update: ChatUpdate, user_id: User_initiator):
         if self.chats_repo.is_owner(user_id.id, chat_update.chat_id):
